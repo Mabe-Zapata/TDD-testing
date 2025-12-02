@@ -17,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|c:\\users\\patyl\\documents\\metodologiasagiles\\guiaape4\\library\\librarycore\\loan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|solutionrelative:librarycore\\loan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|c:\\users\\patyl\\documents\\metodologiasagiles\\guiaape4\\library\\librarycore\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|solutionrelative:librarycore\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -40,9 +36,10 @@
               "RelativeDocumentMoniker": "LibraryCore\\LibraryService.cs",
               "ToolTip": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\LibraryCore\\LibraryService.cs",
               "RelativeToolTip": "LibraryCore\\LibraryService.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAUwCQAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-02T04:16:09.962Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
@@ -53,10 +50,14 @@
               "RelativeDocumentMoniker": "LibraryTests\\LibraryServiceTest.cs",
               "ToolTip": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\LibraryTests\\LibraryServiceTest.cs",
               "RelativeToolTip": "LibraryTests\\LibraryServiceTest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAAADAAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-02T04:25:13.519Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
             },
             {
               "$type": "Document",
@@ -66,7 +67,7 @@
               "RelativeDocumentMoniker": "LibraryCore\\Book.cs",
               "ToolTip": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\LibraryCore\\Book.cs",
               "RelativeToolTip": "LibraryCore\\Book.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAAABAAAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-02T04:08:51.104Z",
               "EditorCaption": ""
@@ -81,25 +82,7 @@
               "RelativeToolTip": "LibraryCore\\Loan.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T04:14:02.451Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\LibraryCore\\User.cs",
-              "RelativeDocumentMoniker": "LibraryCore\\User.cs",
-              "ToolTip": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\LibraryCore\\User.cs",
-              "RelativeToolTip": "LibraryCore\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T04:12:59.494Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+              "WhenOpened": "2025-12-02T04:14:02.451Z"
             }
           ]
         }

@@ -16,5 +16,15 @@ namespace LibraryCore
 
         public int Copies { get; set; }
 
+        public Book(string code, string title, string author,string description, int copies)
+        {
+            Code = code;
+            Title = title;
+            Author = author;
+            Description = description;
+            Copies = copies;
+        }
     }
 }
+
+

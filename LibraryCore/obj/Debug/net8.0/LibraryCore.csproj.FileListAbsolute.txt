@@ -9,3 +9,4 @@ C:\Users\patyl\Documents\MetodologiasAgiles\GuiaAPE4\Library\LibraryCore\obj\Deb
 C:\Users\patyl\Documents\MetodologiasAgiles\GuiaAPE4\Library\LibraryCore\obj\Debug\net8.0\refint\LibraryCore.dll
 C:\Users\patyl\Documents\MetodologiasAgiles\GuiaAPE4\Library\LibraryCore\obj\Debug\net8.0\LibraryCore.pdb
 C:\Users\patyl\Documents\MetodologiasAgiles\GuiaAPE4\Library\LibraryCore\obj\Debug\net8.0\ref\LibraryCore.dll
+C:\Users\patyl\Documents\MetodologiasAgiles\GuiaAPE4\Library\LibraryCore\obj\Debug\net8.0\LibraryCore.sourcelink.json

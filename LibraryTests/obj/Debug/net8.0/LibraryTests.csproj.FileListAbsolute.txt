@@ -100,3 +100,4 @@ C:\Users\patyl\Documents\MetodologiasAgiles\GuiaAPE4\Library\LibraryTests\obj\De
 C:\Users\patyl\Documents\MetodologiasAgiles\GuiaAPE4\Library\LibraryTests\obj\Debug\net8.0\LibraryTests.pdb
 C:\Users\patyl\Documents\MetodologiasAgiles\GuiaAPE4\Library\LibraryTests\obj\Debug\net8.0\LibraryTests.genruntimeconfig.cache
 C:\Users\patyl\Documents\MetodologiasAgiles\GuiaAPE4\Library\LibraryTests\obj\Debug\net8.0\ref\LibraryTests.dll
+C:\Users\patyl\Documents\MetodologiasAgiles\GuiaAPE4\Library\LibraryTests\obj\Debug\net8.0\LibraryTests.sourcelink.json
