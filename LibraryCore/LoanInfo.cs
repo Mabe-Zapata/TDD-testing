@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace LibraryCore
 {
-    public class Loan
+    public class LoanInfo
     {
         public string BookCode { get; set; }
-
+        public string BookTitle{get;set;}
         public string UserCode { get; set; }
+        public string UserName { get; set; }
+        public string UserLastName { get; set; }
         public DateTime LoanDate { get; set; }
-        public bool Returned { get; set; } = false;
 
-        public Loan(string bookCode, string userCode) {
-            BookCode = bookCode;
-            UserCode = userCode;
-            LoanDate = DateTime.Now;
-        
-        }
+        public bool Returned { get; set; }
+
+
+
     }
 }
