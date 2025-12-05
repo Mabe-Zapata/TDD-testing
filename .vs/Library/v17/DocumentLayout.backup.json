@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|c:\\users\\patyl\\documents\\metodologiasagiles\\guiaape4\\library\\librarycore\\libraryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|solutionrelative:librarycore\\libraryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{411F9EB7-F80E-4D17-B0ED-4311B8AD1A71}|LibraryTests\\LibraryTests.csproj|c:\\users\\patyl\\documents\\metodologiasagiles\\guiaape4\\library\\librarytests\\libraryservicetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{411F9EB7-F80E-4D17-B0ED-4311B8AD1A71}|LibraryTests\\LibraryTests.csproj|solutionrelative:librarytests\\libraryservicetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|c:\\users\\patyl\\documents\\metodologiasagiles\\guiaape4\\library\\librarycore\\loaninfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|solutionrelative:librarycore\\loaninfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|c:\\users\\patyl\\documents\\metodologiasagiles\\guiaape4\\library\\librarycore\\libraryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|solutionrelative:librarycore\\libraryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|c:\\users\\patyl\\documents\\metodologiasagiles\\guiaape4\\library\\librarycore\\loan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|solutionrelative:librarycore\\loan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|c:\\users\\patyl\\documents\\metodologiasagiles\\guiaape4\\library\\librarycore\\loaninfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|solutionrelative:librarycore\\loaninfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1178EEAD-DB93-4B2C-8916-2645E47C91E2}|LibraryCore\\LibraryCore.csproj|c:\\users\\patyl\\documents\\metodologiasagiles\\guiaape4\\library\\librarycore\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,11 +34,29 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Loan.cs",
+              "DocumentMoniker": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\LibraryCore\\Loan.cs",
+              "RelativeDocumentMoniker": "LibraryCore\\Loan.cs",
+              "ToolTip": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\LibraryCore\\Loan.cs",
+              "RelativeToolTip": "LibraryCore\\Loan.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T04:14:02.451Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "LoanInfo.cs",
               "DocumentMoniker": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\LibraryCore\\LoanInfo.cs",
               "RelativeDocumentMoniker": "LibraryCore\\LoanInfo.cs",
@@ -51,46 +69,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "LibraryService.cs",
               "DocumentMoniker": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\LibraryCore\\LibraryService.cs",
               "RelativeDocumentMoniker": "LibraryCore\\LibraryService.cs",
               "ToolTip": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\LibraryCore\\LibraryService.cs",
               "RelativeToolTip": "LibraryCore\\LibraryService.cs",
-              "ViewState": "AgIAAI4AAAAAAAAAAAAIwKMAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAQwJsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-02T04:16:09.962Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "LibraryServiceTest.cs",
               "DocumentMoniker": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\LibraryTests\\LibraryServiceTest.cs",
               "RelativeDocumentMoniker": "LibraryTests\\LibraryServiceTest.cs",
               "ToolTip": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\LibraryTests\\LibraryServiceTest.cs",
               "RelativeToolTip": "LibraryTests\\LibraryServiceTest.cs",
-              "ViewState": "AgIAAL8AAAAAAAAAAAAIwMIAAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAgwJ4AAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-02T04:25:13.519Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Loan.cs",
-              "DocumentMoniker": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\LibraryCore\\Loan.cs",
-              "RelativeDocumentMoniker": "LibraryCore\\Loan.cs",
-              "ToolTip": "C:\\Users\\patyl\\Documents\\MetodologiasAgiles\\GuiaAPE4\\Library\\LibraryCore\\Loan.cs",
-              "RelativeToolTip": "LibraryCore\\Loan.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T04:14:02.451Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             },
             {
               "$type": "Document",
@@ -102,8 +103,7 @@
               "RelativeToolTip": "LibraryCore\\Book.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T04:08:51.104Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-02T04:08:51.104Z"
             },
             {
               "$type": "Document",
@@ -115,12 +115,7 @@
               "RelativeToolTip": "LibraryCore\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T21:40:21.149Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+              "WhenOpened": "2025-12-02T21:40:21.149Z"
             }
           ]
         }

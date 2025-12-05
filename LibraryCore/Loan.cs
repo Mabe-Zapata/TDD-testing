@@ -8,16 +8,18 @@ namespace LibraryCore
 {
     public class Loan
     {
+        public string IdLoan { get; set; }
         public string BookCode { get; set; }
 
         public string UserCode { get; set; }
         public DateTime LoanDate { get; set; }
         public bool Returned { get; set; } = false;
 
-        public Loan(string bookCode, string userCode) {
-            BookCode = bookCode;
-            UserCode = userCode;
-            LoanDate = DateTime.Now;
+        public Loan(string IdLoan, string bookCode, string userCode) {
+            this.IdLoan = IdLoan;
+            this.BookCode = bookCode;
+            this.UserCode = userCode;
+            this.LoanDate = DateTime.Now;
         
         }
     }

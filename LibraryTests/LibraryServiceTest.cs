@@ -84,7 +84,7 @@ namespace LibraryTests
             LibraryService library = new LibraryService();
             library.RegisterUser("U001", "Maria", "Zapata");
             Assert.Throws<InvalidOperationException>(() =>
-            library.LendBook("B002", "U001"));
+            library.LendBook("L001", "B002", "U001"));
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace LibraryTests
                "encountering peculiar adults, and comes to Earth, where he learns about friendship " +
                "and love from a fox.", 10);
             Assert.Throws<InvalidOperationException>(() =>
-            library.LendBook("B001", "U001"));
+            library.LendBook("L001", "B001", "U001"));
         }
 
 
@@ -111,9 +111,9 @@ namespace LibraryTests
                "encountering peculiar adults, and comes to Earth, where he learns about friendship " +
                "and love from a fox.", 1);
             library.RegisterUser("U001", "Maria", "Zapata");
-            library.LendBook("B001", "U001");
+            library.LendBook("L001", "B001", "U001");
             Assert.Throws<InvalidOperationException>(() =>
-            library.LendBook("B001", "U001"));
+            library.LendBook("L002", "B001", "U001"));
         }
 
         [Fact]
@@ -125,7 +125,7 @@ namespace LibraryTests
             library.RegisterUser("U001", "Maria", "Zapata");
 
         
-            Loan loan = library.LendBook("B001", "U001");
+            Loan loan = library.LendBook("L001", "B001", "U001");
 
             
             Assert.NotNull(loan);                        
@@ -143,7 +143,7 @@ namespace LibraryTests
             library.RegisterUser("U001", "Maria", "Zapata");
 
             Assert.Throws<InvalidOperationException>(() =>
-            library.ReturnBook("B001", "U001"));
+            library.ReturnBook("L001"));
         }
 
         [Fact]
@@ -152,9 +152,9 @@ namespace LibraryTests
             LibraryService library = new LibraryService();
             library.RegisterBook("B001", "The Little Prince", "Antoine de Saint-Exupery", "Descripción", 3);
             library.RegisterUser("U001", "Maria", "Zapata");
-            library.LendBook("B001", "U001");
+            library.LendBook("L001","B001","U001");
 
-            Loan loan = library.ReturnBook("B001","U001");
+            Loan loan = library.ReturnBook("L001");
             Assert.NotNull(loan);
             Book book = library.GetBookByCode("B001");
             Assert.Equal(3, book.Copies);
@@ -168,7 +168,7 @@ namespace LibraryTests
                 "Descripción", 2);
             library.RegisterBook("B002", "1984", "George Orwell", "Descripción", 1);
             library.RegisterUser("U001", "Maria", "Zapata");
-            library.LendBook("B002", "U001");
+            library.LendBook("L001", "B002", "U001");
             Book[] availableBooks = library.ShowAvailableBooks();
 
             Assert.Single(availableBooks);
@@ -184,8 +184,8 @@ namespace LibraryTests
             library.RegisterUser("U001", "Maria", "Zapata");
             library.RegisterUser("U002", "Erick", "Guerron");
 
-            library.LendBook("B001", "U001");
-            library.LendBook("B002", "U002");
+            library.LendBook("L001", "B001", "U001");
+            library.LendBook("L002", "B002", "U002");
 
             var loansWithInfo = library.ShowActiveLoansWithBookInfo();
             Assert.Contains(loansWithInfo, l => l.BookCode == "B001" && l.UserCode == "U001");
@@ -202,11 +202,11 @@ namespace LibraryTests
             library.RegisterBook("B002", "1984", "George Orwell", "Descripción", 1);
             library.RegisterUser("U001", "Maria", "Zapata");
 
-            library.LendBook("B001", "U001");
-            library.LendBook("B002", "U001");
+            library.LendBook("L001","B001", "U001");
+            library.LendBook("L002", "B002","U001");
 
 
-            library.ReturnBook("B001", "U001");
+            library.ReturnBook("L001");
 
 
             var history = library.ShowLoanHistoryByUser("U001");
