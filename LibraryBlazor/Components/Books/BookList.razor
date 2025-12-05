@@ -1,0 +1,155 @@
+@using System.Linq
+@using LibraryCore
+@inject LibraryService LibraryService
+
+<div class="section-header">
+    <h2>
+        <i class="bi bi-book"></i>
+        Gestion de Libros
+    </h2>
+    <button class="btn btn-primary" @onclick="OpenModal">
+        <i class="bi bi-plus-circle"></i>
+        Nuevo Libro
+    </button>
+</div>
+
+<!-- Search box -->
+<div class="search-box">
+    <div class="input-group">
+        <span class="input-group-text bg-white">
+            <i class="bi bi-search"></i>
+        </span>
+        <input type="text" class="form-control" placeholder="Buscar por titulo, autor o codigo..."
+               @bind="searchQuery" @bind:event="oninput" />
+        @if (!string.IsNullOrEmpty(searchQuery))
+        {
+            <button class="btn btn-outline-secondary" type="button" @onclick="() => searchQuery = string.Empty">
+                <i class="bi bi-x"></i>
+            </button>
+        }
+    </div>
+</div>
+
+@{
+    var books = GetFilteredBooks().ToArray();
+}
+
+@if (books.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th style="width: 120px;">Codigo</th>
+                    <th>Titulo</th>
+                    <th style="width: 200px;">Autor</th>
+                    <th style="width: 300px;">Descripcion</th>
+                    <th style="width: 100px;" class="text-center">Copias</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in books)
+                {
+                    <tr>
+                        <td>
+                            <span class="code-badge">
+                                <i class="bi bi-bookmark"></i>
+                                @book.Code
+                            </span>
+                        </td>
+                        <td>
+                            <strong>@book.Title</strong>
+                        </td>
+                        <td>@book.Author</td>
+                        <td>
+                            <small class="text-muted">
+                                @(string.IsNullOrWhiteSpace(book.Description)
+                                    ? "Sin descripcion"
+                                    : (book.Description.Length > 80
+                                        ? book.Description.Substring(0, 80) + "..."
+                                        : book.Description))
+                            </small>
+                        </td>
+                        <td class="text-center">
+                            @if (book.Copies == 0)
+                            {
+                                <span class="badge bg-danger">
+                                    <i class="bi bi-x-circle"></i>
+                                    Sin stock
+                                </span>
+                            }
+                            else if (book.Copies == 1)
+                            {
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                    @book.Copies copia
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">
+                                    <i class="bi bi-check-circle"></i>
+                                    @book.Copies copias
+                                </span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-muted small mt-2">
+        <i class="bi bi-info-circle"></i>
+        Mostrando @books.Count() de @LibraryService.ShowBooks().Length libros registrados
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <i class="bi bi-inbox"></i>
+        <h5>@(string.IsNullOrEmpty(searchQuery) ? "No hay libros registrados" : "No se encontraron libros")</h5>
+        <p class="mb-0">
+            @if (string.IsNullOrEmpty(searchQuery))
+            {
+                <text>Comience agregando libros a la biblioteca haciendo clic en "Nuevo Libro"</text>
+            }
+            else
+            {
+                <text>Intente con otros terminos de busqueda</text>
+            }
+        </p>
+    </div>
+}
+
+<!-- Modal -->
+<BookFormModal IsOpen="isModalOpen" IsOpenChanged="OnModalOpenChanged" OnSuccess="HandleSuccess" />
+
+@code {
+    [Parameter] public EventCallback<string> OnSuccess { get; set; }
+
+    private bool isModalOpen = false;
+    private string searchQuery = string.Empty;
+
+    private IEnumerable<Book> GetFilteredBooks()
+    {
+        return LibraryService.SearchBooks(searchQuery ?? string.Empty);
+    }
+
+    private void OpenModal()
+    {
+        isModalOpen = true;
+    }
+
+    private async Task OnModalOpenChanged(bool isOpen)
+    {
+        isModalOpen = isOpen;
+        StateHasChanged();
+    }
+
+    private async Task HandleSuccess(string message)
+    {
+        await OnSuccess.InvokeAsync(message);
+        StateHasChanged();
+    }
+}

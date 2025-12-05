@@ -1,0 +1,235 @@
+@using System.Linq
+@using LibraryCore
+@inject LibraryService LibraryService
+
+<div class="section-header">
+    <h2>
+        <i class="bi bi-clock-history"></i>
+        Historial de Prestamos por Usuario
+    </h2>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="bi bi-search"></i>
+        Buscar Historial
+    </div>
+    <div class="card-body">
+        <div class="d-flex flex-wrap align-items-end gap-3">
+            <div class="flex-grow-1">
+                <label class="form-label">
+                    Codigo de Usuario
+                </label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text"
+                           class="form-control"
+                           @bind="userCode"
+                           placeholder="Ej: USR001"
+                           @onkeypress="HandleKeyPress" />
+                    <button type="button" class="btn btn-primary" @onclick="SearchHistory">
+                        <i class="bi bi-search"></i>
+                        Buscar
+                    </button>
+                </div>
+                <div class="form-text">
+                    <i class="bi bi-info-circle"></i>
+                    Ingrese el codigo del usuario para ver su historial completo de prestamos
+                </div>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger alert-dismissible fade show mt-3 mb-0" role="alert">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <strong>Error:</strong> @errorMessage
+                <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
+            </div>
+        }
+    </div>
+</div>
+
+@if (historyLoans != null)
+{
+    var filteredHistoryLoans = FilteredHistoryLoans;
+
+    <div class="card">
+        <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
+            <div>
+                <i class="bi bi-list-ul"></i>
+                Resultados - @filteredHistoryLoans.Count() prestamo@(filteredHistoryLoans.Count() == 1 ? "" : "s")
+                @if (!string.IsNullOrEmpty(searchedUserCode))
+                {
+                    <span class="badge bg-primary ms-2">@searchedUserCode</span>
+                }
+            </div>
+            <div style="max-width: 300px;">
+                <input type="text" class="form-control form-control-sm" placeholder="Buscar en historial..." @bind="searchQuery" @bind:event="oninput" />
+            </div>
+        </div>
+        <div class="card-body p-0">
+            @if (filteredHistoryLoans.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th style="width: 120px;">Libro</th>
+                                <th>Titulo</th>
+                                <th style="width: 180px;">Usuario</th>
+                                <th style="width: 150px;">Fecha Prestamo</th>
+                                <th style="width: 120px;" class="text-center">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var loan in filteredHistoryLoans.OrderByDescending(l => l.LoanDate))
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="code-badge">
+                                            <i class="bi bi-bookmark"></i>
+                                            @loan.BookCode
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <strong>@loan.BookTitle</strong>
+                                    </td>
+                                    <td>
+                                        <div>@loan.UserName @loan.UserLastName</div>
+                                        <small class="text-muted code-badge">@loan.UserCode</small>
+                                    </td>
+                                    <td>@loan.LoanDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td class="text-center">
+                                        @if (loan.Returned)
+                                        {
+                                            <span class="badge bg-success">
+                                                <i class="bi bi-check-circle-fill"></i>
+                                                Devuelto
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-warning text-dark">
+                                                <i class="bi bi-clock-history"></i>
+                                                Activo
+                                            </span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="p-3 bg-light border-top">
+                    <div class="row text-center">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-check-circle-fill text-success" style="font-size: 1.25rem;"></i>
+                                <div>
+                                    <strong class="d-block">@filteredHistoryLoans.Count(l => l.Returned)</strong>
+                                    <small class="text-muted">Devueltos</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-clock-history text-warning" style="font-size: 1.25rem;"></i>
+                                <div>
+                                    <strong class="d-block">@filteredHistoryLoans.Count(l => !l.Returned)</strong>
+                                    <small class="text-muted">Activos</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="empty-state">
+                    @if (string.IsNullOrWhiteSpace(searchQuery))
+                    {
+                        <i class="bi bi-inbox"></i>
+                        <h5>Sin historial de prestamos</h5>
+                        <p class="mb-0">
+                            Este usuario no tiene prestamos registrados en el sistema
+                        </p>
+                    }
+                    else
+                    {
+                        <i class="bi bi-search"></i>
+                        <h5>No se encontraron resultados</h5>
+                        <p class="mb-0">
+                            No se encontraron prestamos que coincidan con "@searchQuery".
+                        </p>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    private string userCode = string.Empty;
+    private string errorMessage = string.Empty;
+    private string searchedUserCode = string.Empty;
+    private LoanInfo[]? historyLoans = null;
+    private string searchQuery = string.Empty;
+
+    private IEnumerable<LoanInfo> FilteredHistoryLoans
+    {
+        get
+        {
+            if (historyLoans == null)
+            {
+                return Enumerable.Empty<LoanInfo>();
+            }
+
+            if (string.IsNullOrWhiteSpace(searchQuery))
+            {
+                return historyLoans;
+            }
+
+            var search = searchQuery.ToLowerInvariant();
+            return historyLoans.Where(l =>
+                l.BookTitle.ToLowerInvariant().Contains(search) ||
+                l.BookCode.ToLowerInvariant().Contains(search) ||
+                (l.Returned ? "devuelto".Contains(search) : "activo".Contains(search))
+            );
+        }
+    }
+
+    private void SearchHistory()
+    {
+        errorMessage = string.Empty;
+        historyLoans = null;
+        searchQuery = string.Empty;
+
+        if (string.IsNullOrWhiteSpace(userCode))
+        {
+            errorMessage = "Por favor ingrese un codigo de usuario";
+            return;
+        }
+
+        try
+        {
+            historyLoans = LibraryService.ShowLoanHistoryByUser(userCode);
+            searchedUserCode = userCode;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+    private void HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            SearchHistory();
+        }
+    }
+}

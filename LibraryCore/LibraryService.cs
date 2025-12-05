@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,11 +9,12 @@ namespace LibraryCore
         private readonly List<Book> books = new();
         private readonly List<User> users = new();
         private readonly List<Loan> loans = new();
+        private static readonly StringComparer CodeComparer = StringComparer.OrdinalIgnoreCase;
 
         private void ValidateBookCode(string code)
         {
-            if (books.Any(b => b.Code == code))
-                throw new InvalidOperationException("No se permiten libros con códigos duplicados");
+            if (books.Any(b => CodeComparer.Equals(b.Code, code)))
+                throw new InvalidOperationException("No se permiten libros con codigos duplicados");
         }
 
         private void ValidateBookCopies(int copies)
@@ -37,8 +38,8 @@ namespace LibraryCore
             ValidateUserCode(code);
             ValidateUserName(name);
 
-            if (users.Any(u => u.Code == code))
-                throw new InvalidOperationException("No se puede ingresar usuarios con códigos duplicados");
+            if (users.Any(u => CodeComparer.Equals(u.Code, code)))
+                throw new InvalidOperationException("No se puede ingresar usuarios con codigos duplicados");
 
             var newUser = new User(code, name, lastName);
             users.Add(newUser);
@@ -48,32 +49,83 @@ namespace LibraryCore
         private void ValidateUserCode(string code)
         {
             if (string.IsNullOrWhiteSpace(code))
-                throw new InvalidOperationException("El código del usuario no puede estar vacío");
+                throw new InvalidOperationException("El codigo del usuario no puede estar vacio");
         }
 
         private void ValidateUserName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
-                throw new InvalidOperationException("El nombre del usuario no puede estar vacío");
+                throw new InvalidOperationException("El nombre del usuario no puede estar vacio");
         }
 
         public Book GetBookByCode(string code)
         {
-            return books.Find(b => b.Code == code);
+            if (string.IsNullOrWhiteSpace(code))
+                return null;
+
+            return books.FirstOrDefault(b => CodeComparer.Equals(b.Code, code));
+        }
+
+        public User GetUserByCode(string code)
+        {
+            if (string.IsNullOrWhiteSpace(code))
+                return null;
+
+            return users.FirstOrDefault(u => CodeComparer.Equals(u.Code, code));
+        }
+
+        public Book[] ShowBooks()
+        {
+            return books.ToArray();
+        }
+
+        public User[] ShowUsers()
+        {
+            return users.ToArray();
+        }
+
+        public IEnumerable<Book> SearchBooks(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+                return books;
+
+            var normalized = query.Trim().ToLower();
+
+            return books.Where(book =>
+                book.Code.ToLower().Contains(normalized) ||
+                book.Title.ToLower().Contains(normalized) ||
+                book.Author.ToLower().Contains(normalized) ||
+                (!string.IsNullOrWhiteSpace(book.Description) &&
+                 book.Description.ToLower().Contains(normalized)));
+        }
+
+        public IEnumerable<User> SearchUsers(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+                return users;
+
+            var normalized = query.Trim().ToLower();
+
+            return users.Where(user =>
+            {
+                var fullName = $"{user.FirstName} {user.LastName}".ToLower();
+                return user.Code.ToLower().Contains(normalized) ||
+                       fullName.Contains(normalized);
+            });
         }
 
         public Loan LendBook(string idLoan, string codeBook, string codeUser)
         {
-            var book = books.FirstOrDefault(b => b.Code == codeBook)
+            var book = books.FirstOrDefault(b => CodeComparer.Equals(b.Code, codeBook))
                        ?? throw new InvalidOperationException("Solo se prestan libros existentes dentro de la biblioteca");
 
-            var user = users.FirstOrDefault(u => u.Code == codeUser)
+            var user = users.FirstOrDefault(u => CodeComparer.Equals(u.Code, codeUser))
                        ?? throw new InvalidOperationException("Solo se prestan libros a usuarios existentes");
 
             if (book.Copies <= 0)
                 throw new InvalidOperationException("No hay copias disponibles para prestar");
 
-            var loan = new Loan(idLoan, codeBook, codeUser);
+            var loan = new Loan(idLoan, book.Code, user.Code);
             loans.Add(loan);
             book.Copies--;
 
@@ -82,14 +134,14 @@ namespace LibraryCore
 
         public Loan ReturnBook(string idLoan)
         {
-            var loan = loans.FirstOrDefault(l => l.IdLoan == idLoan)
-                       ?? throw new InvalidOperationException("No existe el préstamo activo");
+            var loan = loans.FirstOrDefault(l => CodeComparer.Equals(l.IdLoan, idLoan))
+                       ?? throw new InvalidOperationException("No existe el prestamo activo");
 
             if (loan.Returned)
-                throw new InvalidOperationException("El préstamo ya fue devuelto previamente");
+                throw new InvalidOperationException("El prestamo ya fue devuelto previamente");
 
-            var book = books.FirstOrDefault(b => b.Code == loan.BookCode)
-                       ?? throw new InvalidOperationException("El libro asociado al préstamo no existe");
+            var book = books.FirstOrDefault(b => CodeComparer.Equals(b.Code, loan.BookCode))
+                       ?? throw new InvalidOperationException("El libro asociado al prestamo no existe");
 
             loan.Returned = true;
             book.Copies++;
@@ -108,8 +160,8 @@ namespace LibraryCore
                 .Where(l => !l.Returned)
                 .Select(l =>
                 {
-                    var book = books.First(b => b.Code == l.BookCode);
-                    var user = users.First(u => u.Code == l.UserCode);
+                    var book = books.First(b => CodeComparer.Equals(b.Code, l.BookCode));
+                    var user = users.First(u => CodeComparer.Equals(u.Code, l.UserCode));
 
                     return new LoanInfo
                     {
@@ -126,17 +178,17 @@ namespace LibraryCore
 
         public LoanInfo[] ShowLoanHistoryByUser(string userCode)
         {
-            if (!users.Any(u => u.Code == userCode))
+            if (!users.Any(u => CodeComparer.Equals(u.Code, userCode)))
                 throw new InvalidOperationException("Usuario no existe");
 
             return loans
-                .Where(l => l.UserCode == userCode)
+                .Where(l => CodeComparer.Equals(l.UserCode, userCode))
                 .Select(l =>
                 {
-                    var book = books.FirstOrDefault(b => b.Code == l.BookCode)
-                               ?? throw new InvalidOperationException($"Libro con código {l.BookCode} no existe");
+                    var book = books.FirstOrDefault(b => CodeComparer.Equals(b.Code, l.BookCode))
+                               ?? throw new InvalidOperationException($"Libro con codigo {l.BookCode} no existe");
 
-                    var user = users.First(u => u.Code == l.UserCode);
+                    var user = users.First(u => CodeComparer.Equals(u.Code, l.UserCode));
 
                     return new LoanInfo
                     {

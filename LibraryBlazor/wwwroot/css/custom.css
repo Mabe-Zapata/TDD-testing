@@ -1,0 +1,499 @@
+/* ========================================
+   LIBRARY MANAGER - BOOTSTRAP CUSTOMIZATION
+   Paleta Pastel Minimalista
+   ======================================== */
+
+:root {
+    --bs-primary: #A8C5E0;
+    --bs-primary-rgb: 168, 197, 224;
+
+    --bs-secondary: #C8B8E8;
+    --bs-secondary-rgb: 200, 184, 232;
+
+    --bs-success: #B8D4C8;
+    --bs-success-rgb: 184, 212, 200;
+
+    --bs-info: #B8D8E8;
+    --bs-info-rgb: 184, 216, 232;
+
+    --bs-warning: #F5D6A7;
+    --bs-warning-rgb: 245, 214, 167;
+
+    --bs-danger: #E8B8B8;
+    --bs-danger-rgb: 232, 184, 184;
+
+    --bs-light: #FAF8F3;
+    --bs-light-rgb: 250, 248, 243;
+
+    --bs-dark: #2C2C2C;
+    --bs-dark-rgb: 44, 44, 44;
+
+    /* Body */
+    --bs-body-bg: #FAF8F3;
+    --bs-body-color: #2C2C2C;
+
+    /* Border radius */
+    --bs-border-radius: 0.5rem;
+    --bs-border-radius-sm: 0.375rem;
+    --bs-border-radius-lg: 0.75rem;
+    --bs-border-radius-xl: 1rem;
+
+    /* Shadows */
+    --bs-box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.075);
+    --bs-box-shadow-sm: 0 0.0625rem 0.25rem rgba(0, 0, 0, 0.05);
+    --bs-box-shadow-lg: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
+}
+
+.navbar-brand {
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
+}
+
+code, .code-badge {
+    font-family: 'Fira Code', monospace;
+}
+
+/* ========================================
+   NAVBAR
+   ======================================== */
+.navbar {
+    box-shadow: var(--bs-box-shadow);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.navbar-brand i {
+    font-size: 1.75rem;
+    vertical-align: middle;
+}
+
+/* ========================================
+   CARDS
+   ======================================== */
+.card {
+    border: none;
+    box-shadow: var(--bs-box-shadow);
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--bs-box-shadow-lg);
+}
+
+.card-header {
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+    border-bottom: 2px solid var(--bs-primary);
+    font-weight: 600;
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+.btn {
+    font-weight: 500;
+    border-radius: var(--bs-border-radius);
+    transition: all 0.2s ease;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn i {
+    vertical-align: middle;
+}
+
+/* ========================================
+   TABLES
+   ======================================== */
+.table {
+    background-color: white;
+}
+
+.table thead {
+    background-color: var(--bs-primary);
+    color: white;
+}
+
+.table thead th {
+    border: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(var(--bs-primary-rgb), 0.05);
+}
+
+.table-responsive {
+    border-radius: var(--bs-border-radius);
+    box-shadow: var(--bs-box-shadow);
+}
+
+/* ========================================
+   MODALS
+   ======================================== */
+.modal-content {
+    border: none;
+    border-radius: var(--bs-border-radius-lg);
+    box-shadow: var(--bs-box-shadow-lg);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-secondary) 100%);
+    color: white;
+    border-bottom: none;
+    border-radius: var(--bs-border-radius-lg) var(--bs-border-radius-lg) 0 0;
+}
+
+.modal-header .btn-close {
+    filter: brightness(0) invert(1);
+}
+
+.modal-title {
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
+}
+
+.modal-title i {
+    font-size: 1.5rem;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-footer {
+    border-top: 1px solid #dee2e6;
+    padding: 1.5rem 2rem;
+}
+
+/* Modal sections */
+.modal-section {
+    margin-bottom: 2rem;
+}
+
+.modal-section:last-child {
+    margin-bottom: 0;
+}
+
+.modal-section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--bs-secondary);
+    border-bottom: 2px solid var(--bs-secondary);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.modal-section-title i {
+    font-size: 1.25rem;
+}
+
+/* ========================================
+   FORMS
+   ======================================== */
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--bs-dark);
+}
+
+.form-label .required {
+    color: var(--bs-danger);
+    margin-left: 0.25rem;
+}
+
+.form-control,
+.form-select {
+    border-radius: var(--bs-border-radius);
+    border: 2px solid #dee2e6;
+    padding: 0.625rem 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: var(--bs-danger);
+}
+
+.form-control.is-valid,
+.form-select.is-valid {
+    border-color: var(--bs-success);
+}
+
+.invalid-feedback {
+    display: block;
+    font-size: 0.875rem;
+    margin-top: 0.375rem;
+}
+
+.validation-summary {
+    background-color: rgba(var(--bs-danger-rgb), 0.1);
+    border-left: 4px solid var(--bs-danger);
+    padding: 1rem;
+    border-radius: var(--bs-border-radius);
+    margin-bottom: 1.5rem;
+}
+
+.validation-summary ul {
+    margin-bottom: 0;
+    padding-left: 1.25rem;
+}
+
+/* ========================================
+   TABS
+   ======================================== */
+.nav-tabs {
+    border-bottom: 2px solid #dee2e6;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #6c757d;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--bs-primary);
+    border-bottom-color: var(--bs-primary);
+    background-color: rgba(var(--bs-primary-rgb), 0.05);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--bs-primary);
+    border-bottom-color: var(--bs-primary);
+    background-color: transparent;
+    font-weight: 600;
+}
+
+.nav-tabs .nav-link i {
+    font-size: 1.25rem;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+.tab-content {
+    padding: 2rem 0;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   BADGES
+   ======================================== */
+.badge {
+    font-weight: 500;
+    padding: 0.375rem 0.75rem;
+    border-radius: 20px;
+}
+
+.code-badge {
+    background-color: rgba(var(--bs-secondary-rgb), 0.2);
+    color: var(--bs-secondary);
+    font-size: 0.875rem;
+    padding: 0.25rem 0.625rem;
+}
+
+/* ========================================
+   ALERTS
+   ======================================== */
+.alert {
+    border: none;
+    border-left: 4px solid;
+    border-radius: var(--bs-border-radius);
+}
+
+.alert i {
+    font-size: 1.25rem;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+/* ========================================
+   EMPTY STATES
+   ======================================== */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: white;
+    border-radius: var(--bs-border-radius);
+    box-shadow: var(--bs-box-shadow-sm);
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: #dee2e6;
+    margin-bottom: 1.5rem;
+}
+
+.empty-state h5 {
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.empty-state p {
+    color: #adb5bd;
+    margin-bottom: 1.5rem;
+}
+
+/* ========================================
+   UTILITIES
+   ======================================== */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.section-header h2 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.section-header h2 i {
+    font-size: 2rem;
+}
+
+.search-box {
+    max-width: 500px;
+    margin-bottom: 1.5rem;
+}
+
+.search-box .input-group {
+    box-shadow: var(--bs-box-shadow-sm);
+    border-radius: var(--bs-border-radius);
+}
+
+.search-box .input-group .form-control {
+    border: 2px solid #dee2e6;
+}
+
+/* Summary box in modals */
+.summary-box {
+    background-color: rgba(var(--bs-info-rgb), 0.1);
+    border-left: 4px solid var(--bs-info);
+    padding: 1rem;
+    border-radius: var(--bs-border-radius);
+    margin-top: 1rem;
+}
+
+.summary-box dl {
+    margin-bottom: 0;
+}
+
+.summary-box dt {
+    font-weight: 600;
+    color: var(--bs-dark);
+}
+
+.summary-box dd {
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.summary-box dd:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+    .modal-body {
+        padding: 1.5rem;
+    }
+
+    .modal-footer {
+        padding: 1rem 1.5rem;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .tab-content {
+        padding: 1rem 0;
+    }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+.fade-in {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-up {
+    animation: slideUp 0.3s ease;
+}
+
+.loan-modal-body {
+    max-height: 60vh;
+    overflow-y: auto;
+}

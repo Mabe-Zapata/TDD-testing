@@ -1,0 +1,128 @@
+@page "/"
+@using LibraryBlazor.Components.Books
+@using LibraryBlazor.Components.Users
+@using LibraryBlazor.Components.Loans
+@using LibraryBlazor.Components.Shared
+
+<PageTitle>Library Manager - Dashboard</PageTitle>
+
+<div class="container-fluid fade-in">
+    <!-- Welcome Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="mb-2">
+                <i class="bi bi-grid"></i>
+                Panel de Control
+            </h1>
+            <p class="text-muted">
+                Sistema de gestión de biblioteca - Administre libros, usuarios y préstamos
+            </p>
+        </div>
+    </div>
+
+    <!-- Success Alert -->
+    @if (!string.IsNullOrEmpty(successMessage))
+    {
+        <div class="row mb-3">
+            <div class="col">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <strong>¡Éxito!</strong> @successMessage
+                    <button type="button" class="btn-close" @onclick="() => successMessage = string.Empty"></button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Navigation Tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link @(activeTab == "books" ? "active" : "")"
+                    type="button" role="tab"
+                    @onclick='() => SetActiveTab("books")'>
+                <i class="bi bi-book"></i>
+                Libros
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link @(activeTab == "users" ? "active" : "")"
+                    type="button" role="tab"
+                    @onclick='() => SetActiveTab("users")'>
+                <i class="bi bi-people"></i>
+                Usuarios
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link @(activeTab == "loans" ? "active" : "")"
+                    type="button" role="tab"
+                    @onclick='() => SetActiveTab("loans")'>
+                <i class="bi bi-bookmark-check"></i>
+                Préstamos
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link @(activeTab == "history" ? "active" : "")"
+                    type="button" role="tab"
+                    @onclick='() => SetActiveTab("history")'>
+                <i class="bi bi-clock-history"></i>
+                Historial
+            </button>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+        @if (activeTab == "books")
+        {
+            <div class="tab-pane fade show active">
+                <BookList OnSuccess="ShowSuccessMessage" />
+            </div>
+        }
+        else if (activeTab == "users")
+        {
+            <div class="tab-pane fade show active">
+                <UserList OnSuccess="ShowSuccessMessage" />
+            </div>
+        }
+        else if (activeTab == "loans")
+        {
+            <div class="tab-pane fade show active">
+                <LoanList OnSuccess="ShowSuccessMessage" />
+            </div>
+        }
+        else if (activeTab == "history")
+        {
+            <div class="tab-pane fade show active">
+                <LoanHistoryByUser />
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private string activeTab = "books";
+    private string successMessage = string.Empty;
+
+    private void SetActiveTab(string tab)
+    {
+        activeTab = tab;
+        successMessage = string.Empty; // Clear messages when changing tabs
+    }
+
+    private void ShowSuccessMessage(string message)
+    {
+        successMessage = message;
+        StateHasChanged();
+
+        // Auto-dismiss after 5 seconds
+        _ = Task.Run(async () =>
+        {
+            await Task.Delay(5000);
+            await InvokeAsync(() =>
+            {
+                successMessage = string.Empty;
+                StateHasChanged();
+            });
+        });
+    }
+}

@@ -1,0 +1,152 @@
+@using LibraryCore
+@using LibraryBlazor.Models
+@inject LibraryService LibraryService
+
+<!-- Modal -->
+<div class="modal fade @(IsOpen ? "show d-block" : "")" tabindex="-1" style="@(IsOpen ? "background-color: rgba(0,0,0,0.5);" : "")">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-person-plus-fill"></i>
+                    Registrar Nuevo Usuario
+                </h5>
+                <button type="button" class="btn-close" @onclick="Close"></button>
+            </div>
+
+            <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+                <DataAnnotationsValidator />
+
+                <div class="modal-body">
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                            <strong>Error:</strong> @errorMessage
+                            <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
+                        </div>
+                    }
+
+                    <ValidationSummary class="validation-summary" />
+
+                    <!-- Sección: Identificación del Usuario -->
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <i class="bi bi-upc-scan"></i>
+                            Identificación del Usuario
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Código
+                                <span class="required">*</span>
+                            </label>
+                            <InputText @bind-Value="model.Code" class="form-control" placeholder="Ej: USR001" />
+                            <ValidationMessage For="@(() => model.Code)" class="invalid-feedback" />
+                            <div class="form-text">
+                                <i class="bi bi-info-circle"></i>
+                                Código único que identificará al usuario en el sistema
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección: Datos Personales -->
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <i class="bi bi-person-badge"></i>
+                            Datos Personales
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Nombre
+                                    <span class="required">*</span>
+                                </label>
+                                <InputText @bind-Value="model.FirstName" class="form-control" placeholder="Ej: Juan" />
+                                <ValidationMessage For="@(() => model.FirstName)" class="invalid-feedback" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Apellido
+                                    <span class="required">*</span>
+                                </label>
+                                <InputText @bind-Value="model.LastName" class="form-control" placeholder="Ej: Pérez" />
+                                <ValidationMessage For="@(() => model.LastName)" class="invalid-feedback" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="Close">
+                        <i class="bi bi-x-circle"></i>
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary" disabled="@isSubmitting">
+                        @if (isSubmitting)
+                        {
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                        }
+                        else
+                        {
+                            <i class="bi bi-save"></i>
+                        }
+                        Guardar Usuario
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public bool IsOpen { get; set; }
+    [Parameter] public EventCallback<bool> IsOpenChanged { get; set; }
+    [Parameter] public EventCallback<string> OnSuccess { get; set; }
+
+    private UserFormModel model = new();
+    private string errorMessage = string.Empty;
+    private bool isSubmitting = false;
+
+    private async Task HandleValidSubmit()
+    {
+        isSubmitting = true;
+        errorMessage = string.Empty;
+
+        try
+        {
+            LibraryService.RegisterUser(
+                model.Code,
+                model.FirstName,
+                model.LastName
+            );
+
+            await OnSuccess.InvokeAsync($"Usuario '{model.FirstName} {model.LastName}' registrado exitosamente");
+            await Close();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private async Task Close()
+    {
+        IsOpen = false;
+        await IsOpenChanged.InvokeAsync(IsOpen);
+        ResetForm();
+    }
+
+    private void ResetForm()
+    {
+        model = new UserFormModel();
+        errorMessage = string.Empty;
+        isSubmitting = false;
+    }
+}

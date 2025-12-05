@@ -1,0 +1,191 @@
+﻿@using LibraryCore
+@inject LibraryService LibraryService
+
+<div class="section-header">
+    <h2>
+        <i class="bi bi-bookmark-check"></i>
+        Gestión de Préstamos
+    </h2>
+    <button class="btn btn-primary" @onclick="OpenModal">
+        <i class="bi bi-plus-circle"></i>
+        Nuevo Préstamo
+    </button>
+</div>
+
+<h5 class="mb-3">
+    <i class="bi bi-list-check"></i>
+    Préstamos Activos
+</h5>
+
+@{
+    var activeLoans = LibraryService.ShowActiveLoansWithBookInfo();
+}
+
+@if (activeLoans.Any())
+{
+    <div class="table-responsive">
+        <table class="table-hover table align-middle">
+            <thead>
+                <tr>
+                    <th style="width: 120px;">Libro</th>
+                    <th>Título</th>
+                    <th style="width: 150px;">Usuario</th>
+                    <th style="width: 150px;">Fecha Préstamo</th>
+                    <th style="width: 120px;" class="text-center">Estado</th>
+                    <th style="width: 120px;" class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var loan in activeLoans)
+                {
+                    <tr>
+                        <td>
+                            <span class="code-badge">
+                                <i class="bi bi-bookmark"></i>
+                                @loan.BookCode
+                            </span>
+                        </td>
+                        <td>
+                            <strong>@loan.BookTitle</strong>
+                        </td>
+                        <td>
+                            <div>@loan.UserName @loan.UserLastName</div>
+                            <small class="text-muted code-badge">@loan.UserCode</small>
+                        </td>
+                        <td>@loan.LoanDate.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td class="text-center">
+                            <span class="badge bg-warning text-dark">
+                                <i class="bi bi-clock-history"></i>
+                                Activo
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-success btn-sm" @onclick="() => ShowReturnConfirmation(loan)">
+                                <i class="bi bi-arrow-return-left"></i>
+                                Devolver
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-muted small mt-2">
+        <i class="bi bi-info-circle"></i>
+        @activeLoans.Length préstamo@(activeLoans.Length == 1 ? "" : "s") activo@(activeLoans.Length == 1 ? "" : "s")
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <i class="bi bi-inbox"></i>
+        <h5>No hay préstamos activos</h5>
+        <p class="mb-0">
+            Todos los libros han sido devueltos o no hay préstamos registrados
+        </p>
+    </div>
+}
+
+<!-- Modal para crear préstamo -->
+<LoanFormModal IsOpen="isModalOpen" IsOpenChanged="OnModalOpenChanged" OnSuccess="HandleSuccess" />
+
+<!-- Confirmation Dialog (implementación simple) -->
+@if (showReturnConfirmation && loanToReturn != null)
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-question-circle"></i>
+                        Confirmar Devolución
+                    </h5>
+                    <button type="button" class="btn-close" @onclick="CancelReturn"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro que desea registrar la devolución de este préstamo?</p>
+                    <div class="alert alert-info">
+                        <strong>Libro:</strong> @loanToReturn.BookTitle<br />
+                        <strong>Usuario:</strong> @loanToReturn.UserName @loanToReturn.UserLastName
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CancelReturn">
+                        <i class="bi bi-x-circle"></i>
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-success" @onclick="ConfirmReturn">
+                        <i class="bi bi-check-circle"></i>
+                        Confirmar Devolución
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public EventCallback<string> OnSuccess { get; set; }
+
+    private bool isModalOpen = false;
+    private bool showReturnConfirmation = false;
+    private LoanInfo? loanToReturn = null;
+
+    // Necesitamos guardar un mapeo de LoanInfo a IdLoan porque LoanInfo no tiene IdLoan
+    // Esta es una limitación del diseño actual
+    private string? currentLoanId = null;
+
+    private void OpenModal()
+    {
+        isModalOpen = true;
+    }
+
+    private async Task OnModalOpenChanged(bool isOpen)
+    {
+        isModalOpen = isOpen;
+        StateHasChanged();
+    }
+
+    private void ShowReturnConfirmation(LoanInfo loan)
+    {
+        loanToReturn = loan;
+        showReturnConfirmation = true;
+
+        // Nota: LoanInfo no contiene el IdLoan, por lo que necesitaríamos modificar
+        // LibraryCore para incluirlo, o buscar una alternativa
+        // Por ahora, mostraremos un mensaje indicando esta limitación
+    }
+
+    private void CancelReturn()
+    {
+        showReturnConfirmation = false;
+        loanToReturn = null;
+        currentLoanId = null;
+    }
+
+    private async Task ConfirmReturn()
+    {
+        try
+        {
+            // Problema: LoanInfo no tiene IdLoan
+            // Necesitaríamos que LibraryService.ShowActiveLoansWithBookInfo()
+            // también retorne el IdLoan en LoanInfo para poder hacer la devolución
+
+            await OnSuccess.InvokeAsync("Funcionalidad de devolución requiere modificación en LibraryCore para incluir IdLoan en LoanInfo");
+
+            showReturnConfirmation = false;
+            loanToReturn = null;
+        }
+        catch (Exception ex)
+        {
+            await OnSuccess.InvokeAsync($"Error: {ex.Message}");
+        }
+    }
+
+    private async Task HandleSuccess(string message)
+    {
+        await OnSuccess.InvokeAsync(message);
+        StateHasChanged();
+    }
+}

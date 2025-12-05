@@ -1,0 +1,180 @@
+@using LibraryCore
+@using LibraryBlazor.Models
+@inject LibraryService LibraryService
+
+<!-- Modal -->
+<div class="modal fade @(IsOpen ? "show d-block" : "")" tabindex="-1" style="@(IsOpen ? "background-color: rgba(0,0,0,0.5);" : "")">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-book-fill"></i>
+                    Registrar Nuevo Libro
+                </h5>
+                <button type="button" class="btn-close" @onclick="Close"></button>
+            </div>
+
+            <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+                <DataAnnotationsValidator />
+
+                <div class="modal-body">
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                            <strong>Error:</strong> @errorMessage
+                            <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
+                        </div>
+                    }
+
+                    <ValidationSummary class="validation-summary" />
+
+                    <!-- Sección: Identificación del Libro -->
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <i class="bi bi-card-heading"></i>
+                            Identificación del Libro
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">
+                                    Código
+                                    <span class="required">*</span>
+                                </label>
+                                <InputText @bind-Value="model.Code" class="form-control" placeholder="Ej: LIB001" />
+                                <ValidationMessage For="@(() => model.Code)" class="invalid-feedback" />
+                            </div>
+
+                            <div class="col-md-8">
+                                <label class="form-label">
+                                    Título
+                                    <span class="required">*</span>
+                                </label>
+                                <InputText @bind-Value="model.Title" class="form-control" placeholder="Ej: Cien años de soledad" />
+                                <ValidationMessage For="@(() => model.Title)" class="invalid-feedback" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección: Autor y Detalles -->
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <i class="bi bi-person-fill"></i>
+                            Autor y Detalles
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Autor
+                                <span class="required">*</span>
+                            </label>
+                            <InputText @bind-Value="model.Author" class="form-control" placeholder="Ej: Gabriel García Márquez" />
+                            <ValidationMessage For="@(() => model.Author)" class="invalid-feedback" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Descripción</label>
+                            <InputTextArea @bind-Value="model.Description" class="form-control" rows="3"
+                                          placeholder="Descripción breve del libro (opcional)" />
+                            <ValidationMessage For="@(() => model.Description)" class="invalid-feedback" />
+                        </div>
+                    </div>
+
+                    <!-- Sección: Inventario -->
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <i class="bi bi-boxes"></i>
+                            Inventario
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Cantidad de Copias
+                                    <span class="required">*</span>
+                                </label>
+                                <InputNumber @bind-Value="model.Copies" class="form-control" min="1" max="100" />
+                                <ValidationMessage For="@(() => model.Copies)" class="invalid-feedback" />
+                                <div class="form-text">
+                                    <i class="bi bi-info-circle"></i>
+                                    Ingrese la cantidad de ejemplares disponibles (1-100)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="Close">
+                        <i class="bi bi-x-circle"></i>
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary" disabled="@isSubmitting">
+                        @if (isSubmitting)
+                        {
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                        }
+                        else
+                        {
+                            <i class="bi bi-save"></i>
+                        }
+                        Guardar Libro
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public bool IsOpen { get; set; }
+    [Parameter] public EventCallback<bool> IsOpenChanged { get; set; }
+    [Parameter] public EventCallback<string> OnSuccess { get; set; }
+
+    private BookFormModel model = new();
+    private string errorMessage = string.Empty;
+    private bool isSubmitting = false;
+
+    private async Task HandleValidSubmit()
+    {
+        isSubmitting = true;
+        errorMessage = string.Empty;
+
+        try
+        {
+            LibraryService.RegisterBook(
+                model.Code,
+                model.Title,
+                model.Author,
+                model.Description,
+                model.Copies
+            );
+
+            await OnSuccess.InvokeAsync($"Libro '{model.Title}' registrado exitosamente");
+            await Close();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private async Task Close()
+    {
+        IsOpen = false;
+        await IsOpenChanged.InvokeAsync(IsOpen);
+        ResetForm();
+    }
+
+    private void ResetForm()
+    {
+        model = new BookFormModel();
+        errorMessage = string.Empty;
+        isSubmitting = false;
+    }
+}
