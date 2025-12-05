@@ -1,0 +1,41 @@
+# ============================
+# Visual Studio / IDE
+# ============================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code / Rider (opcional)
+.vscode/
+.idea/
+
+# ============================
+# .NET build
+# ============================
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+
+# Configuración de publicación
+**/Properties/PublishProfiles/
+
+# Paquetes NuGet locales
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+*.nuget.props
+*.nuget.targets
+
+# ============================
+# Otros
+# ============================
+*.log
+*.tmp
+*.cache
+*.DS_Store
+Thumbs.db
